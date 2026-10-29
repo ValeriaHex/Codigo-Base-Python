@@ -8,6 +8,7 @@ def analizar_token(cadena):
     estado = 0
     i = 0
     operadores = {'+', '-', '*', '/', '=', '<', '>', '%'}
+    palabras_r = {'COMIENZO', 'ENTERO', 'MOSTRAR', 'SI', 'SINO', 'Y'}
 
     while i < len(cadena):
         c = cadena[i]
@@ -38,6 +39,12 @@ def analizar_token(cadena):
 
         elif estado == 4:  # Procesando Operador
             return "Operador no válido (demasiados caracteres)"
+        elif estado == 5:
+            if not c.isupper():
+                estado = 1
+            else:
+                return "Palabra reservada válida"
+            return 
 
         i += 1
 
@@ -48,12 +55,13 @@ def analizar_token(cadena):
         return "Número válido"
     elif estado == 4:
         return "Operador válido"
+        return "Operador no válido (demasiados caracteres)"
 
     return "Cadena no válida"
 
 
 # --- Pruebas ---
-entradas = ["variable1+", "125", "45.67", "+", "_contador", "99num", "++"]
+entradas = ["variable1", "125", "45.a67", "+", "_contador", "99num", "+++","COMIENZO","Car8","Y"]
 
 for e in entradas:
     print(f"'{e}' -> {analizar_token(e)}")
